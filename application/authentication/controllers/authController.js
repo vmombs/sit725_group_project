@@ -1,5 +1,7 @@
 const passport = require('passport');
 const User = require('../models/classes/User');
+const crypto = require('crypto');
+const { sendPasswordResetEmail } = require('../utils/mailer');
 
 const signup = async (req, res) => {
     try {
@@ -14,8 +16,13 @@ const signup = async (req, res) => {
         // Create new user
         const newUser = new User({ username, email, password });
         await newUser.save();
+        req.login(newUser, (err) => { 
+            if (err) { return next(err); } 
+            res.redirect('/'); 
+        }); 
+        
+       // res.status(201).json({ message: 'Signup successful' }); 
 
-        res.status(201).json({ message: 'Signup successful' }); 
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'Server error' });
@@ -23,6 +30,7 @@ const signup = async (req, res) => {
 };
 
 const login = async (req, res, next) => {
+    console.log("login called")
     try {
         passport.authenticate('local', function(err, user, info, status) {
 
@@ -53,6 +61,7 @@ const logout = (req, res, next) => {
   };
 
 const forgotPassword = async (req, res) => {
+
     try {
         const { email } = req.body;
 
@@ -69,11 +78,12 @@ const forgotPassword = async (req, res) => {
         user.resetPasswordExpires = Date.now() + 3600000; // 1 hour from now
         await user.save();
 
-        // Send a password reset email (implement email sending logic here)
-        // ... (send email with reset link: `http://your-domain/reset-password/${resetToken}`)
+        // Send a password reset email
+        await sendPasswordResetEmail(user.email, resetToken);
 
         res.status(200).json({ message: 'Password reset email sent' }); 
 
+        
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'Server error' });

@@ -1,12 +1,19 @@
 const express = require("express");
 const path = require("path");
-const authRoutes = require("./application/authentication/routes/authRoutes");
+
+// Authentication
 const session = require("express-session");
-const MongoStore = require("connect-mongo");
-const mongoose = require("mongoose");
 const passport = require("passport");
 const passportConfig = require("./application/authentication/models/services/passport");
+
+// MongoDB
+const MongoStore = require("connect-mongo");
+const mongoose = require("mongoose");
 const connectDB = require("./application/db"); // Import the database connection function. Doing it here ensures a single connection accross the entire app.
+
+// Routes Import
+const authRoutes = require("./application/authentication/routes/authRoutes");
+const myAccountRoutes = require("./application/my_account/routes/myAccountRoutes");
 
 // Setting up port
 const port = process.env.port || 3000;
@@ -23,7 +30,8 @@ app.set("view engine", "ejs");
 // Set multiple view directories
 app.set("views", [
   path.join(__dirname, "application", "authentication", "views"),
-  path.join(__dirname, "application", "user_profile", "views"),
+  path.join(__dirname, "application", "my_account", "views"),
+  path.join(__dirname, 'application', 'partials'), // Partials directory doesn't have any subdirectories
   // ... other view directories for other features such as heat_map etc
 ]);
 
@@ -52,12 +60,16 @@ passportConfig(passport); // Initialize Passport with the configuration we defin
 app.use(passport.initialize());
 app.use(passport.session());
 
-// Authentication routes
+// Mount Routes
 app.use("/auth", authRoutes);
+app.use("/my_account", myAccountRoutes);
 // ... define other routes here
 
 // Middleware to enforce authentication
 const ensureAuthenticated = (req, res, next) => {
+  if (req.path.startsWith('/js/') || req.path.startsWith('/css/')) {
+    return next(); // Allow static files
+} 
   if (req.isAuthenticated()) {
     return next(); 
   }
@@ -71,7 +83,7 @@ app.use(
 );
 
 // Static files
-app.use(express.static(__dirname + "/public"));
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Start listening at port
 const server = app.listen(port, () => {

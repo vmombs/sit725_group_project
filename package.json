@@ -2,9 +2,10 @@
   "name": "week-4",
   "version": "1.0.0",
   "description": "",
-  "main": "mongodb.js",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon server.js"
   },
   "author": "",
   "license": "ISC",
@@ -25,6 +26,7 @@
     "chai": "^5.1.2",
     "chai-http": "^5.1.1",
     "mocha": "^11.0.1",
+    "nodemon": "^3.1.9",
     "sinon": "^19.0.2"
   }
 }

@@ -1,0 +1,9 @@
+services:
+  mongo:
+    image: mongo:latest
+    container_name: sneezlDB
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./db:/data/db
+    restart: unless-stopped

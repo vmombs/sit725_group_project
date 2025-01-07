@@ -13,6 +13,7 @@ const connectDB = require("./application/db"); // Import the database connection
 
 // Routes Import
 const authRoutes = require("./application/authentication/routes/authRoutes");
+const dashboardRoutes = require("./application/dashboard/routes/dashboardRoutes");
 const myAccountRoutes = require("./application/my_account/routes/myAccountRoutes");
 
 // Setting up port
@@ -30,6 +31,7 @@ app.set("view engine", "ejs");
 // Set multiple view directories
 app.set("views", [
   path.join(__dirname, "application", "authentication", "views"),
+  path.join(__dirname, "application", "dashboard", "views"),
   path.join(__dirname, "application", "my_account", "views"),
   path.join(__dirname, 'application', 'partials'), // Partials directory doesn't have any subdirectories
   // ... other view directories for other features such as heat_map etc
@@ -62,6 +64,7 @@ app.use(passport.session());
 
 // Mount Routes
 app.use("/auth", authRoutes);
+app.use("/", dashboardRoutes);
 app.use("/my_account", myAccountRoutes);
 // ... define other routes here
 
@@ -87,7 +90,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Start listening at port
 const server = app.listen(port, () => {
-  console.log("App listening to: " + port);
+  // console.log("App listening to: " + port);
+  console.log(`App listening at http://localhost:${port}`);
 });
 
 module.exports = server; // Export the server instance [makes using this in unit tests easier]

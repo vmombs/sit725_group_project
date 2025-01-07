@@ -1,0 +1,85 @@
+<style>
+  /* .custom-card {
+    width: 100%;
+    height: 200px;
+    border-radius: 16px;
+    overflow: hidden;
+    position: relative;
+    background-color: #ddd;
+  }
+
+  .card-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -10;
+    filter: brightness(0.95)
+  }
+
+  .card-image::before {
+    content: "";
+    z-index: 10;
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+  }
+
+  .card-content {
+    z-index: 20;
+    position: absolute;
+    bottom: 10px;
+    left: 16px;
+    color: white;
+    font-size: 1rem;
+    font-weight: bold;
+  } */
+
+  .card {
+    cursor: pointer;
+  }
+
+  .card:hover {
+    box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+  }
+
+  .card-image > img {
+    height: 200px;
+    z-index: 0;
+    object-fit: cover;
+  }
+
+  .card-image > span {
+    z-index: 10;
+  }
+
+  .card-image::before {
+    content: "";
+    z-index: 10;
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+
+    background: linear-gradient(0deg, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0) 60%, rgba(0,0,0,0) 100%);
+  }
+</style>
+
+<!-- <div class="col s4">
+  <div class="custom-card">
+    <div class="card-content">
+      <span><%= data.name %></span>
+    </div>
+
+    <img src="assets/images/<%= data.image %>" alt="Card Background" class="card-image">
+  </div>
+</div> -->
+
+<div class="col s4">
+  <div class="card">
+    <div class="card-image">
+      <img src="assets/images/<%= data.image %>" alt="Card Background">
+      <span class="card-title"><%= data.name %></span>
+    </div>
+  </div>
+</div>

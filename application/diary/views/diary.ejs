@@ -11,7 +11,7 @@
   <!--Import Google Icon Font-->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-  <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.3/themes/smoothness/jquery-ui.css">
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.3/themes/south-street/jquery-ui.css">
   <script src="https://code.jquery.com/ui/1.13.3/jquery-ui.js"></script>
 
   <!--Import materialize.css-->
@@ -47,15 +47,19 @@
           <h1>Diary</h1>
         </div>
         <div class="col s6">
-          <div id="datepicker"></div>
+          <div id="datepicker" style="width: 100%; box-sizing: border-box;"></div>
           <script>
             $("#datepicker").datepicker({
               showButtonPanel: true,
               dateFormat: "dd/mm/yyyy",
-              beforeShow: function () {
-                $(".ui-datepicker").css('font-size', 20)
+              maxDate: 0,
+              onSelect: function () {
+                var dateObject = $(this).datepicker('getDate');
               }
             });
+
+            // scale the date widget appropriately
+            $('.ui-datepicker').css('font-size', $('.ui-datepicker').width() / 10 + 'px');
           </script>
         </div>
         <div class="col s6">6-columns (one-half) to contain symptom inputs</div>

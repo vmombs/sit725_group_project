@@ -49,17 +49,12 @@
         <div class="col s6">
           <div id="datepicker" style="width: 100%; box-sizing: border-box;"></div>
           <script>
+            // initialise the datepicker inline here so materialize doesn't stomp on it
             $("#datepicker").datepicker({
               showButtonPanel: true,
               dateFormat: "dd/mm/yyyy",
               maxDate: 0,
-              onSelect: function () {
-                var dateObject = $(this).datepicker('getDate');
-              }
             });
-
-            // scale the date widget appropriately
-            $('.ui-datepicker').css('font-size', $('.ui-datepicker').width() / 10 + 'px');
           </script>
         </div>
         <div class="col s6">6-columns (one-half) to contain symptom inputs</div>
@@ -68,7 +63,7 @@
 
     <!--JavaScript at end of body for optimized loading-->
     <script type="text/javascript" src="js/materialize.min.js"></script>
-    <script src="js/script.js"></script>
+    <script type="text/javascript" src="/js/calendar-widget.js"></script>
 
 </body>
 

@@ -11,6 +11,9 @@
   <!--Import Google Icon Font-->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.3/themes/smoothness/jquery-ui.css">
+  <script src="https://code.jquery.com/ui/1.13.3/jquery-ui.js"></script>
+
   <!--Import materialize.css-->
   <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
   <!-- Import custom material colours -->
@@ -43,7 +46,18 @@
         <div class="col s12">
           <h1>Diary</h1>
         </div>
-        <div class="col s6">6-columns (one-half) to contain calendar picker</div>
+        <div class="col s6">
+          <div id="datepicker"></div>
+          <script>
+            $("#datepicker").datepicker({
+              showButtonPanel: true,
+              dateFormat: "dd/mm/yyyy",
+              beforeShow: function () {
+                $(".ui-datepicker").css('font-size', 20)
+              }
+            });
+          </script>
+        </div>
         <div class="col s6">6-columns (one-half) to contain symptom inputs</div>
       </div>
     </main>

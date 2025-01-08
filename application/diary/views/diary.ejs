@@ -80,6 +80,36 @@
               id = "add-symptoms-button"
               style="float: right; background-color: #c5efab; color: #072100;">add</a>
           </div>
+
+          <h4>Add a Medication</h4>
+          <div class="row">
+            <div class="input-field col s24">
+              <input type="text" id="medication" class="autocomplete">
+              <label for="autocomplete-input">Select Medication...</label>
+            </div>
+
+            <div class="input-field col s24">
+              <select name="quantity" id="quantity-medication">
+                <option value="" disabled selected>Select Quantity</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+              </select>
+            </div>
+
+          </div>
+          <div class="row" style="width: 100%; ">
+            <a class="waves-effect waves-light btn"
+              id = "add-medication-button"
+              style="float: right; background-color: #c5efab; color: #072100;">add</a>
+          </div>
         </div>
       </div>
       </div>
@@ -89,6 +119,7 @@
     <script type="text/javascript" src="js/materialize.min.js"></script>
     <script type="text/javascript" src="/js/calendar-widget.js"></script>
     <script type="text/javascript" src="/js/diary-symptoms.js"></script>
+    <script type="text/javascript" src="/js/diary-medication.js"></script>
 
 </body>
 

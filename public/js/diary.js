@@ -17,7 +17,7 @@ $(document).ready(function () {
 
   // set up medication name autocomplete
   $(document).ready(function () {
-    $('input.autocomplete').autocomplete({
+    $('#medication').autocomplete({
       data: {
         "Azelastine (Astepro)": null,
         "Ketotifen (Alaway, Zaditor)": null,
@@ -65,6 +65,47 @@ $(document).ready(function () {
           }
         }
       });
+    });
+  });
+
+  // set up symptom form automcomplete
+  $('#symptoms').autocomplete({
+    data: {
+      "Congestion": null,
+      "Watery Eyes": null,
+      "Itchy Eyes": null,
+      "Sinus Pressure": null,
+      "Sneezing": null
+    },
+  });
+
+  $('select').formSelect();
+
+  // actions to take when add-symptoms clicked
+  $('#add-symptoms-button').on('click', function () {
+    // Get the values of the input fields
+    const symptomsValue = $('#symptoms').val();
+    const severityValue = $('#severity-symptoms').val();
+
+    // construct data to post
+    let symptomData = {};
+    symptomData.date = fullDate;
+    symptomData.name = symptomsValue;
+    symptomData.severity = severityValue;
+
+    $.ajax({
+      url: '/diary/add-symptom',
+      type: 'POST',
+      data: symptomData,
+      success: (result) => {
+        if (result.statusCode === 201) {
+          alert('symptom posted');
+          // reset the input fields
+          $('#symptoms').val('');
+          $('#severity-symptoms').prop('selectedIndex', 0);
+          $('select').formSelect();
+        }
+      }
     });
   });
 

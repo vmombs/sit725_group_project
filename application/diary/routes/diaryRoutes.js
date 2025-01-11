@@ -8,4 +8,6 @@ router.get('/', (req, res) => {
 
 router.post('/add-medication', diaryController.addMedication);
 
+router.post('/add-symptom', diaryController.addSymptom);
+
 module.exports = router;

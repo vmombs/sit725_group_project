@@ -45,15 +45,26 @@ $(document).ready(function () {
       const medicationValue = $('#medication').val();
       const quantityValue = $('#quantity-medication').val();
 
-      // log the values (or handle them as needed)
-      console.log("Medication:", medicationValue);
-      console.log("Quantity:", quantityValue);
-      console.log("Date:", fullDate);
+      // construct data to post
+      let medicationData = {};
+      medicationData.date = fullDate;
+      medicationData.name = medicationValue;
+      medicationData.quantity = quantityValue;
 
-      // reset the input fields
-      $('#medication').val(''); 
-      $('#quantity-medication').prop('selectedIndex', 0);
-      $('select').formSelect();
+      $.ajax({
+        url: '/diary/add-medication',
+        type: 'POST',
+        data: medicationData,
+        success: (result) => {
+          if (result.statusCode === 201) {
+            alert('medication posted');
+            // reset the input fields
+            $('#medication').val('');
+            $('#quantity-medication').prop('selectedIndex', 0);
+            $('select').formSelect();
+          }
+        }
+      });
     });
   });
 

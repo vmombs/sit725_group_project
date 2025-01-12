@@ -71,6 +71,7 @@ app.use("/auth", authRoutes);
 app.use("/", dashboardRoutes);
 app.use("/my_account", myAccountRoutes);
 app.use("/diary", diaryRoutes);
+app.use("/heatmap", heatmapRoutes);
 // ... define other routes here
 
 // Middleware to enforce authentication

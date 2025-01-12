@@ -1,5 +1,6 @@
 // heatmapController.js
 const heatmapView = require('../views/heatmapView');
+const L = require('leaflet');
 
 let map;
 let pollen = "GRASS_UPI";

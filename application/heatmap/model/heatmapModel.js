@@ -1,8 +1,11 @@
+// heatmapController.js
 const heatmapView = require('../views/heatmapView');
 
 let map;
+let pollen = "GRASS_UPI";
+let apiKey; // Add environmental apikey variable
 
-exports.initMap = () => {
+function initMap(req, res) {
   map = L.map('map', {
     center: [-37.8136, 144.9631], // Center of Melbourne
     zoom: 6,
@@ -17,10 +20,8 @@ exports.initMap = () => {
   }).addTo(map);
 
   updatePollenLayer();
-};
-
-
-let pollen = "GRASS_UPI";
+  res.render('heatmapView', { pollen });
+}
 
 function updatePollenLayer() {
   console.log(`Updating layer to: ${pollen}`);
@@ -31,8 +32,7 @@ function updatePollenLayer() {
   map.addLayer(tileLayer);
 }
 
-
-exports.searchLocation = (req, res) => {
+function searchLocation(req, res) {
   const query = req.body.query;
   const url = `https://nominatim.openstreetmap.org/search?format=json&q=${query}`;
 
@@ -52,15 +52,16 @@ exports.searchLocation = (req, res) => {
       console.error('Error:', error);
       res.json({ success: false, message: "An error occurred while searching for the location." });
     });
-};
+}
 
-
-exports.renderHeatmap = (req, res) => {
-  res.render('heatmapView', { pollen });
-};
-
-exports.updatePollenLayer = (req, res) => {
+function updatePollenLayerController(req, res) {
   pollen = req.body.pollen;
   updatePollenLayer();
   res.json({ success: true });
+}
+
+module.exports = {
+  initMap,
+  searchLocation,
+  updatePollenLayerController
 };

@@ -16,7 +16,7 @@ const authRoutes = require("./application/authentication/routes/authRoutes");
 const dashboardRoutes = require("./application/dashboard/routes/dashboardRoutes");
 const myAccountRoutes = require("./application/my_account/routes/myAccountRoutes");
 const diaryRoutes = require("./application/diary/routes/diaryRoutes");
-const diaryRoutes = require("./application/heatmap/routes/heatmapRoutes");
+const heatmapRoutes = require("./application/heatmap/routes/heatmapRoutes");
 
 // Setting up port
 const port = process.env.port || 3000;

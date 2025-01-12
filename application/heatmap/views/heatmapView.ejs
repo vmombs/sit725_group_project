@@ -3,6 +3,27 @@
 <head>
   <title>Leaflet Map with Pollen Heatmap Tiles</title>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin=""/>
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+  integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+  crossorigin=""></script>
+
+
+  <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
+
+  <link rel="shortcut icon" type="image/x-icon" href="/assets/favicon.ico">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.3/themes/south-street/jquery-ui.css">
+
+  <script type="text/javascript" src="js/jquery-ui.min.js"></script>
+
+  <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
+  <link type="text/css" rel="stylesheet" href="css/material-styles.css" media="screen,projection" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <style>
     #map {
       height: 800px;
@@ -24,10 +45,21 @@
         padding: 5px;
         border: 1px solid black;
         border-radius: 10px;
-      .tree
+    }
+  </style>
+  <style>
+    body {
+      display: flex;
+      min-height: 100vh;
+      flex-direction: column;
+    }
+    main {
+      flex: 1 0 auto;
+      padding: 20px;
     }
   </style>
 </head>
+
 <body>
 
   <div id="container">
@@ -42,19 +74,6 @@
       <button type="button" id="search-button">Go</button>
     </div>
   </div>
-
-  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
-  integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
-  crossorigin=""></script>
-
-  <script src="controllers/heatmapController.js"></script>
-  <script src="views/heatmapView.js"></script>
-  <script src="routes/heatmapRoutes.js"></script>
-  <script src="model/heatmapModel.js"></script>
-
-  <script>
-    heatmapController.initMap();
-  </script>
-
+  
 </body>
 </html>

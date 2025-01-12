@@ -16,6 +16,7 @@ const authRoutes = require("./application/authentication/routes/authRoutes");
 const dashboardRoutes = require("./application/dashboard/routes/dashboardRoutes");
 const myAccountRoutes = require("./application/my_account/routes/myAccountRoutes");
 const diaryRoutes = require("./application/diary/routes/diaryRoutes");
+const diaryRoutes = require("./application/heatmap/routes/heatmapRoutes");
 
 // Setting up port
 const port = process.env.port || 3000;
@@ -36,6 +37,7 @@ app.set("views", [
   path.join(__dirname, "application", "my_account", "views"),
   path.join(__dirname, 'application', 'partials'), // Partials directory doesn't have any subdirectories
   path.join(__dirname, "application", "diary", "views"),
+  path.join(__dirname, "application", "heatmap", "views"),
   // ... other view directories for other features such as heat_map etc
 ]);
 

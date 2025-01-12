@@ -9,7 +9,6 @@ const ensureAuthenticated = (req, res, next) => {
     res.status(401).json({ message: 'Unauthorized' });
 };
 
-
 router.get('/', (req, res) => {
     res.render('diary');
 });
@@ -18,6 +17,9 @@ router.post('/add-medication', ensureAuthenticated, (req, res) => {
     diaryController.addMedication(req, res)
 });
 
-router.post('/add-symptom', diaryController.addSymptom);
+router.post('/add-symptom', ensureAuthenticated, (req, res) => {
+    diaryController.addSymptom(req, res)
+});
+
 
 module.exports = router;

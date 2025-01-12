@@ -98,7 +98,6 @@ $(document).ready(function () {
       data: symptomData,
       success: (result) => {
         if (result.statusCode === 201) {
-          alert('symptom posted');
           // reset the input fields
           $('#symptoms').val('');
           $('#severity-symptoms').prop('selectedIndex', 0);

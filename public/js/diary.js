@@ -57,7 +57,6 @@ $(document).ready(function () {
         data: medicationData,
         success: (result) => {
           if (result.statusCode === 201) {
-            alert('medication posted');
             // reset the input fields
             $('#medication').val('');
             $('#quantity-medication').prop('selectedIndex', 0);

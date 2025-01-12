@@ -7,4 +7,14 @@ const medicationSchema = new mongoose.Schema({
     quantity: { type: Number, required: true, min: 1 },
 });
 
+medicationSchema.statics.addRecord = async function (record) {
+    try {
+        const medication = new this(record);
+        return await medication.save();
+    } catch (error) {
+        console.error('Error adding medication record:', error);
+        throw error;
+    }
+};
+
 module.exports = mongoose.model('Medication', medicationSchema);

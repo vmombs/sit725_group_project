@@ -1,9 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const heatmapController = require('./heatmapController');
+const heatmapController = require('../controllers/heatmapController');
 
-router.get('/', heatmapController.renderHeatmap);
-router.post('/search', heatmapController.searchLocation);
-router.post('/updatePollen', heatmapController.updatePollenLayer);
+
+router.get('/', (req, res) => {
+    res.render('heatmap');
+});
+
 
 module.exports = router;

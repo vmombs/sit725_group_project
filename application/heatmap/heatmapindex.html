@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Leaflet Map with Pollen Heatmap Tiles</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin=""/>
+  <style>
+    #map {
+      height: 800px;
+      width: 1500px;
+      border: 1px solid black;
+    }
+    #container {
+        position: absolute;
+        top: 60px; 
+        left: 60px; 
+        z-index: 1000;
+    }
+    .search-box {
+        position: absolute;
+        top: 10px;
+        left: 50px;
+        z-index: 1000;
+        background: white;
+        padding: 5px;
+        border: 1px solid black;
+        border-radius: 10px;
+      .tree
+    }
+  </style>
+</head>
+<body>
+
+  <div id="container">
+    <button id="tree">TREE</button>
+    <button id="grass">GRASS</button>
+    <button id="weed">WEED</button>
+  </div>
+
+  <div id="map">
+    <div class="search-box">
+      <input type="text" id="search-input" placeholder="Search location...">
+      <button type="button" id="search-button">Go</button>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+  integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+  crossorigin=""></script>
+
+  <script src="controllers/heatmapController.js"></script>
+  <script src="views/heatmapView.js"></script>
+  <script src="routes/heatmapRoutes.js"></script>
+
+  <script>
+    heatmapController.initMap();
+  </script>
+
+</body>
+</html>

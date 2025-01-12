@@ -7,4 +7,14 @@ const symptomSchema = new mongoose.Schema({
     severity: { type: String, required: true},
 });
 
+symptomSchema.statics.addRecord = async function (record) {
+    try {
+        const symptom = new this(record);
+        return await symptom.save();
+    } catch (error) {
+        console.error('Error adding symptom record:', error);
+        throw error;
+    }
+};
+
 module.exports = mongoose.model('Symptom', symptomSchema);

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Sneezl - Diary</title>
+  <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
+  <link rel="shortcut icon" type="image/x-icon" href="/assets/favicon.ico">
+  <!--Link directly to the jQuery CDN-->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+  <!--Import Google Icon Font-->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.3/themes/south-street/jquery-ui.css">
+  <script type="text/javascript" src="js/jquery-ui.min.js"></script>
+
+  <!--Import materialize.css-->
+  <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
+  <!-- Import custom material colours -->
+  <link type="text/css" rel="stylesheet" href="css/material-styles.css" media="screen,projection" />
+
+  <!--Let browser know website is optimized for mobile-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <style>
+    body {
+      display: flex;
+      min-height: 100vh;
+      flex-direction: column;
+    }
+
+    main {
+      flex: 1 0 auto;
+      padding: 20px;
+    }
+  </style>
+
+</head>
+
+<body style="background-color: var(--md-sys-color-surface-container-lowest);">
+
+  <%- include('../partials/navbar') %>
+
+    <main class="container">
+      <div class="row">
+        <div class="col s12">
+          <h1>Diary</h1>
+        </div>
+        <div class="col s6">
+          <div id="datepicker" style="width: 100%; box-sizing: border-box;"></div>
+        </div>
+        <div class="col s6">
+          <h4>Add a Symptom</h4>
+          <div class="row">
+            <div class="input-field col s24">
+              <input type="text" name="symptoms" id="symptoms" class="autocomplete">
+              <label for="autocomplete-input">Select Symptom...</label>
+            </div>
+
+            <div class="input-field col s24">
+              <select name="severity" id="severity-symptoms">
+                <option value="" disabled selected>Select Severity</option>
+                <option value="1">Mild</option>
+                <option value="2">Moderate</option>
+                <option value="3">Severe</option>
+              </select>
+            </div>
+
+          </div>
+          <div class="row" style="width: 100%; ">
+            <a class="waves-effect waves-light btn" id="add-symptoms-button"
+              style="float: right; background-color: #c5efab; color: #072100;">add</a>
+          </div>
+
+          <h4>Add a Medication</h4>
+          <div class="row">
+            <div class="input-field col s24">
+              <input type="text" id="medication" class="autocomplete">
+              <label for="autocomplete-input">Select Medication...</label>
+            </div>
+
+            <div class="input-field col s24">
+              <select name="quantity" id="quantity-medication">
+                <option value="" disabled selected>Select Quantity</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+              </select>
+            </div>
+
+          </div>
+          <div class="row" style="width: 100%; ">
+            <a class="waves-effect waves-light btn" id="add-medication-button"
+              style="float: right; background-color: #c5efab; color: #072100;">add</a>
+          </div>
+        </div>
+      </div>
+      </div>
+    </main>
+
+    <!--JavaScript at end of body for optimized loading-->
+    <script type="text/javascript" src="js/materialize.min.js"></script>
+    <!-- re-include jquery ui to solve overriding issues -->
+    <script type="text/javascript" src="js/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="/js/diary.js"></script>
+
+</body>
+
+</html>

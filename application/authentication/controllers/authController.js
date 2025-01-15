@@ -60,6 +60,18 @@ const logout = (req, res, next) => {
     });
   };
 
+  const deleteAccount = async (req, res, next) => {
+    try {
+      const deletedAccount = await req.user.deleteAccount();
+
+      res.redirect('/'); // Redirect to home page after deleting account
+
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Failed to delete account' });
+    }
+  };
+
 const forgotPassword = async (req, res) => {
 
     try {
@@ -95,4 +107,5 @@ module.exports = {
     login,
     logout, 
     forgotPassword,
+    deleteAccount,
 };

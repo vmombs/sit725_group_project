@@ -17,4 +17,22 @@ medicationSchema.statics.addRecord = async function (record) {
     }
 };
 
+medicationSchema.statics.getRecords = async function (email) {
+    try {
+        return await this.find({ email });
+    } catch (error) {
+        console.error('Error getting medication records:', error);
+        throw error;
+    }
+};
+
+medicationSchema.statics.removeRecord = async function (id) {
+    try {
+        return await this.findByIdAndDelete(id);
+    } catch (error) {
+        console.error('Error deleting medication record:', error);
+        throw error;
+    }
+}
+
 module.exports = mongoose.model('Medication', medicationSchema);

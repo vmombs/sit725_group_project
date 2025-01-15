@@ -17,4 +17,22 @@ symptomSchema.statics.addRecord = async function (record) {
     }
 };
 
+symptomSchema.statics.getRecords = async function (email) {
+    try {
+        return await this.find({ email });
+    } catch (error) {
+        console.error('Error getting symptom records:', error);
+        throw error;
+    }
+}
+
+symptomSchema.statics.removeRecord = async function (id) {
+    try {
+        return await this.findByIdAndDelete(id);
+    } catch (error) {
+        console.error('Error deleting symptom record:', error);
+        throw error;
+    }
+}
+
 module.exports = mongoose.model('Symptom', symptomSchema);

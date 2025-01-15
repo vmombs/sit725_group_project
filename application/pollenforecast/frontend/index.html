@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>5-Day Pollen Forecast</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="materialize.min.css">
+</head>
+<body>
+  <div class="container">
+    <h3 class="center-align">5-Day Pollen Forecast</h3>
+    <div class="input-field">
+      <input id="latitude" type="text" placeholder="Latitude">
+      <input id="longitude" type="text" placeholder="Longitude">
+    </div>
+    <button id="getForecast" class="btn waves-effect waves-light">Get Forecast</button>
+    <p id="errorMessage" class="red-text"></p>
+    <div id="forecastContainer" style="margin-top: 20px;"></div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>

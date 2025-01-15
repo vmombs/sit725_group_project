@@ -22,4 +22,6 @@ router.post('/logout', authController.logout);
 
 router.post('/forgot-password', authController.forgotPassword);
 
+router.post('/delete-account', authController.deleteAccount);
+
 module.exports = router;

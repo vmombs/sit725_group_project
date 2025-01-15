@@ -7,4 +7,25 @@ const symptomSchema = new mongoose.Schema({
     severity: { type: String, required: true},
 });
 
+symptomSchema.statics.addRecord = async function (record) {
+    try {
+        const symptom = new this(record);
+        return await symptom.save();
+    } catch (error) {
+        console.error('Error adding symptom record:', error);
+        throw error;
+    }
+};
+
+// [VM} Added method to delete records by email
+symptomSchema.statics.deleteByEmail = async function (email) {
+    try {
+      const deletedCount = await this.deleteMany({ email });
+      return { deletedCount: deletedCount.deletedCount }; // This returns the number of documents deleted
+    } catch (error) {
+      console.error('Error deleting symptom records:', error);
+      throw error;
+    }
+  };
+
 module.exports = mongoose.model('Symptom', symptomSchema);

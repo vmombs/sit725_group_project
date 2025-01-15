@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <title>Login</title>
+    <!--Import materialize.css-->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
   <style>
     body {
@@ -13,14 +15,18 @@
     main {
       flex: 1 0 auto;
       display: flex;
-      justify-content: center; /* Horizontally center */
-      align-items: center;     /* Vertically center */
+      justify-content: center;
+      /* Horizontally center */
+      align-items: center;
+      /* Vertically center */
     }
 
     .container {
-      width: 400px; /* Adjust as needed */
+      width: 400px;
+      /* Adjust as needed */
       padding: 20px;
-      border: 1px solid #ddd; /* Optional border */
+      border: 1px solid #ddd;
+      /* Optional border */
       border-radius: 5px;
     }
   </style>
@@ -29,26 +35,31 @@
 <body>
   <main>
     <div class="container">
-      <h4 class="center">Login</h4>
 
-      <form action="/auth/login" method="POST">
-        <div class="input-field">
-          <input type="email" id="email" name="email" required class="validate">
-          <label for="email">Email</label>
+        <h4 class="center">Login</h4>
+        <form action="/auth/login" method="POST">
+          <div class="input-field">
+            <input type="email" id="email" name="email" required class="validate">
+            <label for="email">Email</label>
+          </div>
+          <div class="input-field">
+            <input type="password" id="password" name="password" required class="validate">
+            <label for="password">Password</label>
+          </div>
+          <div class="light">
+          <button class="waves-effect waves-light btn" type="submit"
+            style="background-color: #446732; color: white;">
+            Login
+          </button>
         </div>
-        <div class="input-field">
-          <input type="password" id="password" name="password" required class="validate">
-          <label for="password">Password</label>
-        </div>
-        <button class="btn waves-effect waves-light" type="submit">Login</button>
-      </form>
+        </form>
+        <p class="center">
+          <a href="/auth/forgot-password">Forgot Password?</a>
+        </p>
+        <p class="center">
+          Don't have an account? <a href="/auth/signup">Sign Up Now</a>
+        </p>
 
-      <p class="center">
-        <a href="/auth/forgot-password">Forgot Password?</a>
-      </p>
-      <p class="center">
-        Don't have an account? <a href="/auth/signup">Sign Up Now</a>
-      </p>
     </div>
   </main>
 

@@ -66,17 +66,9 @@ passportConfig(passport); // Initialize Passport with the configuration we defin
 app.use(passport.initialize());
 app.use(passport.session());
 
-// Mount Routes
-app.use("/auth", authRoutes);
-app.use("/", dashboardRoutes);
-app.use("/my_account", myAccountRoutes);
-app.use("/diary", diaryRoutes);
-app.use("/heatmap", heatmapRoutes);
-// ... define other routes here
-
 // Middleware to enforce authentication
 const ensureAuthenticated = (req, res, next) => {
-  if (req.path.startsWith('/js/') || req.path.startsWith('/css/')) {
+  if (req.path.startsWith('/js/') || req.path.startsWith('/css/') || req.path.startsWith('/assets/')) {
     return next(); // Allow static files
 } 
   if (req.isAuthenticated()) {
@@ -85,7 +77,15 @@ const ensureAuthenticated = (req, res, next) => {
   res.redirect("/auth/login"); 
 };
 
-// Apply authentication middleware to all routes
+// Mount Routes
+app.use("/auth", authRoutes);
+app.use("/", ensureAuthenticated, dashboardRoutes);
+app.use("/my_account", ensureAuthenticated, myAccountRoutes);
+app.use("/diary", ensureAuthenticated,  diaryRoutes);
+app.use("/heatmap", ensureAuthenticated, heatmapRoutes);
+// ... define other routes here
+
+// Apply authentication middleware to protect the root path
 app.use(
   ["/"], 
   ensureAuthenticated // This enforces checking authentication

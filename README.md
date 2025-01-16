@@ -32,6 +32,9 @@ This application is developed as part of the SIT725 Group Project at Deakin Univ
 The application uses MongoDB as its database. You can either run the database using Docker or install it natively.
 
 [Install Docker](https://docs.docker.com/get-docker/)
+
+OR
+
 [Install MongoDB](https://www.mongodb.com/docs/manual/installation/)
 
 ### Setting up the Application
@@ -42,7 +45,7 @@ To install the application, follow these steps:
 
 ```bash
 git clone https://github.com/vmombs/sit725_group_project.git
-cd sneezl
+cd sit725_group_project
 ```
 
 2. Install the dependencies:

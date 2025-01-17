@@ -87,6 +87,22 @@ This will start the MongoDB database.
 
 4. Start tracking your allergy symptoms and medication usage.
 
+## Testing
+
+Tests in this project are named with the format `*.test.mjs`. To run all tests, use:
+```bash
+npm test
+```
+    
+To run tests and view the coverage report generated with `nyc`, run:
+```bash
+npm run cov
+```
+
+Test reports will then also be available in the `.nyc_output` folder in json format. 
+
+The code coverage requirement in the project is currently set to 80% in the `nyc` config, however this is not yet being treated as a requirement to merge. Contributions that add tests or otherwise increase coverage are welcomed. 
+
 ## Contributing
 
 We welcome contributions to Sneezl! If you would like to contribute, please follow these steps:

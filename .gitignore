@@ -134,3 +134,6 @@ dist
 
 # Database (MongoDB)
 db/
+
+# Output of nyc
+.nyc_output/

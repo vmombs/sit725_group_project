@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "test": "mocha '**/*.test.mjs' --recursive",
-    "cov": "nyc mocha --exit '**/symptom.test.mjs' --recursive",
+    "cov": "nyc mocha --exit '**/medication.test.mjs' --recursive",
     "dev": "nodemon server.js"
   },
   "author": "",

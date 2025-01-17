@@ -4,20 +4,171 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>5-Day Pollen Forecast</title>
-  <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="materialize.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+      margin: 0;
+      display: flex;
+      min-height: 100vh;
+    }
+
+    .navigation-rail {
+      width: 100px;
+      background-color: #2e7d32;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 20px;
+      box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .navigation-rail i {
+      color: white;
+      font-size: 24px;
+      margin: 20px 0;
+      cursor: pointer;
+    }
+
+    .container {
+      flex: 1;
+      padding: 20px;
+    }
+
+    .header {
+      background-color: #e8f5e9;
+      padding: 15px;
+      text-align: center;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .header h5 {
+      margin: 0;
+      color: #2e7d32;
+      font-size: 1.8rem;
+    }
+
+    .input-card {
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      background-color: #ffffff;
+      margin-bottom: 20px;
+    }
+
+    .forecast-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }
+
+    .forecast-card {
+      background-color: #ffffff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 20px;
+      width: calc(33% - 10px);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      margin-bottom: 15px;
+      text-align: center;
+    }
+
+    .forecast-card h6 {
+      margin-bottom: 10px;
+      font-size: 1.2rem;
+      color: #2e7d32;
+    }
+
+    .forecast-card p {
+      margin: 5px 0;
+      font-size: 0.9rem;
+      color: #555;
+    }
+  </style>
 </head>
 <body>
-  <div class="container">
-    <h3 class="center-align">5-Day Pollen Forecast</h3>
-    <div class="input-field">
-      <input id="latitude" type="text" placeholder="Latitude">
-      <input id="longitude" type="text" placeholder="Longitude">
-    </div>
-    <button id="getForecast" class="btn waves-effect waves-light">Get Forecast</button>
-    <p id="errorMessage" class="red-text"></p>
-    <div id="forecastContainer" style="margin-top: 20px;"></div>
+  <div class="navigation-rail">
+    <i class="material-icons">home</i>
+    <i class="material-icons">search</i>
+    <i class="material-icons">settings</i>
   </div>
-  <script src="script.js"></script>
+  <div class="container">
+    <div class="header">
+      <h5>5-Day Forecast</h5>
+    </div>
+    <div class="card input-card">
+      <h6>Enter Location</h6>
+      <div class="input-field">
+        <input id="latitude" type="text" placeholder="Latitude">
+        <input id="longitude" type="text" placeholder="Longitude">
+      </div>
+      <div class="center-align">
+        <button id="getForecast" class="btn waves-effect waves-light">Get Forecast</button>
+      </div>
+      <p id="errorMessage" class="red-text center-align"></p>
+    </div>
+    <div id="forecastContainer" class="forecast-container"></div>
+  </div>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const latitudeInput = document.getElementById("latitude");
+      const longitudeInput = document.getElementById("longitude");
+      const getForecastButton = document.getElementById("getForecast");
+      const forecastContainer = document.getElementById("forecastContainer");
+      const errorMessage = document.getElementById("errorMessage");
+
+      async function fetchForecast() {
+        const latitude = latitudeInput.value;
+        const longitude = longitudeInput.value;
+
+        if (!latitude || !longitude) {
+          errorMessage.textContent = "Please enter valid latitude and longitude.";
+          forecastContainer.innerHTML = "";
+          return;
+        }
+
+        try {
+          const response = await fetch(`http://localhost:5000/api/forecast?latitude=${latitude}&longitude=${longitude}`);
+          if (!response.ok) {
+            throw new Error("Failed to fetch forecast data.");
+          }
+
+          const data = await response.json();
+          displayForecast(data);
+          errorMessage.textContent = "";
+        } catch (err) {
+          errorMessage.textContent = "Failed to fetch forecast data.";
+          console.error(err.message);
+        }
+      }
+
+      function displayForecast(forecast) {
+        if (!forecast || !forecast.dailyInfo || !Array.isArray(forecast.dailyInfo)) {
+          forecastContainer.innerHTML = "<p class='red-text'>Invalid forecast data received.</p>";
+          return;
+        }
+
+        forecastContainer.innerHTML = forecast.dailyInfo.map((day, index) => {
+          const date = new Date(day.date.year, day.date.month - 1, day.date.day);
+          const pollenTypes = day.pollenTypeInfo.map(pollen => {
+            const level = pollen.indexInfo?.category || "Unknown";
+            return `<p><strong>${pollen.displayName}:</strong> ${level}</p>`;
+          }).join("");
+
+          return `
+            <div class="forecast-card">
+              <h6>${index === 0 ? "Today" : date.toLocaleDateString('en-US', { weekday: 'long' })}</h6>
+              ${pollenTypes}
+            </div>
+          `;
+        }).join("");
+      }
+
+      getForecastButton.addEventListener("click", fetchForecast);
+    });
+  </script>
 </body>
 </html>

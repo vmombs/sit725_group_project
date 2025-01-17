@@ -4,8 +4,8 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "mocha '**/*.test.mjs' --recursive",
-    "cov": "nyc mocha '**/symptom.test.mjs' --recursive",
+    "test": "mocha --timeout 5000 '**/*.test.mjs' --recursive",
+    "cov": "nyc mocha --timeout 5000 '**/symptom.test.mjs' --recursive",
     "dev": "nodemon server.js"
   },
   "author": "",

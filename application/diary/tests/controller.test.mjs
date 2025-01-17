@@ -11,12 +11,13 @@ describe('addMedication', () => {
     let req, res, addRecordStub;
 
     before(async () => {
-        await mongoose.connect('mongodb://localhost:27017/testdb', {
+        await mongoose.disconnect();
+        await mongoose.connect('mongodb://localhost:27017/controller-medication-test-db', {
         });
     });
 
     after(async () => {
-        await mongoose.connection.close();
+        await mongoose.disconnect();
     });
 
     beforeEach(() => {
@@ -85,11 +86,11 @@ describe('addSymptom', () => {
     let req, res, addRecordStub;
 
     before(async () => {
-        await mongoose.connect('mongodb://localhost:27017/testdb', {});
+        await mongoose.disconnect();
+        await mongoose.connect('mongodb://localhost:27017/controller-symptom-test-db', {});
     });
 
     after(async () => {
-        await mongoose.connection.dropDatabase();
         await mongoose.disconnect();
     });
 

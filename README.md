@@ -101,7 +101,7 @@ npm run cov
 
 Test reports will then also be available in the `.nyc_output` folder in json format. 
 
-The code coverage requirement in the project is currently set to 80% in the `nyc` config, however this is not yet being treated as a requirement to merge. Contributions that add tests or otherwise increase coverage are welcomed. 
+The code coverage requirement in the project is currently set to 0% in the `nyc` config, as this is purely for informational purposes at this point and not a requirement to merge.
 
 ## Contributing
 

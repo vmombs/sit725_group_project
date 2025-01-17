@@ -5,11 +5,11 @@ import Symptom from '../models/Symptom.js';
 
 describe('Symptom Model', () => {
     before(async () => {
-        await mongoose.connect('mongodb://127.0.0.1:27017/symptom_test', {});
+        await mongoose.disconnect();
+        await mongoose.connect('mongodb://127.0.0.1:27017/symptom-test-db', {});
     });
 
     after(async () => {
-        await mongoose.connection.dropDatabase();
         await mongoose.disconnect();
     });
 

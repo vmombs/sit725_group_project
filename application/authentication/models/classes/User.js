@@ -19,6 +19,23 @@ userSchema.pre("save", async function (next) {
   }
 });
 
+// Method to update the username
+userSchema.methods.updateUsername = async function (newUsername) {
+  try {
+    if (!newUsername || typeof newUsername !== 'string' || newUsername.trim() === '') {
+      throw new Error('Please provide a valid new username');
+    }
+
+    this.username = newUsername.trim();
+    await this.save();
+
+    return { message: 'Username updated successfully!' };
+  } catch (error) {
+    console.error('Error updating username:', error);
+    throw error; // Re-throw the error for handling in the controller
+  }
+};
+
 userSchema.methods.comparePassword = async function (candidatePassword) {
   try {
     return await bcrypt.compare(candidatePassword, this.password);

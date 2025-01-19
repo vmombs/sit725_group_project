@@ -60,7 +60,7 @@ const logout = (req, res, next) => {
     });
   };
 
-  const deleteAccount = async (req, res, next) => {
+const deleteAccount = async (req, res, next) => {
     try {
       const deletedAccount = await req.user.deleteAccount();
 
@@ -70,7 +70,7 @@ const logout = (req, res, next) => {
       console.error(error);
       res.status(500).json({ error: 'Failed to delete account' });
     }
-  };
+};
 
 const forgotPassword = async (req, res) => {
 
@@ -102,10 +102,29 @@ const forgotPassword = async (req, res) => {
     }
 };
 
+const editUsername = async (req, res) => {
+    try {
+      const { newUsername } = req.body;
+  
+      if (!newUsername) {
+        return res.status(400).json({ error: 'Please provide a new username' });
+      }
+  
+      // Update username using the model method
+      const updatedUser = await req.user.updateUsername(newUsername);
+  
+      res.status(200).json(updatedUser); // Send success message or updated user data
+    } catch (error) {
+      console.error('Error updating username:', error);
+      res.status(500).json({ error: 'Failed to update username' });
+    }
+};
+
 module.exports = {
     signup,
     login,
     logout, 
     forgotPassword,
     deleteAccount,
+    editUsername, 
 };

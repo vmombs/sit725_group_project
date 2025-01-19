@@ -65,11 +65,24 @@
           <div class="card">
             <div class="card-content">
               <span class="card-title">
-                <p>Hello <strong>
-                    <%= username %>
-                  </strong></p>
+                <p>Hello, 
+                  <strong>
+                    <% if (user) { %>
+                      <%= user.username %> 
+                      <span id="user-id" style="display: none;"><%= user.id %></span> 
+                    <% } %>
+                  </strong>
+                </p>
               </span>
-
+            </div>
+            <div class="card-action" style="display: flex; gap: 10px; justify-content: flex-end; align-items: center;">
+              <div class="light">
+                <!-- Modal Trigger -->
+                <a class="waves-effect waves-light btn modal-trigger" href="#edit-username-modal"
+                  style="background-color: var(--md-sys-color-primary); color: white;">
+                  Change Username
+                </a>
+              </div>
             </div>
           </div>
 
@@ -77,18 +90,19 @@
             <div class="card-content">
               <span class="card-title">Manage Account</span>
               <ul>
-                <li>Email: <%= email %></li>
+                <li><% if (locals.user) { %>
+                  Email: <%= locals.user.email %>!
+                <% } %>
+                </li>
               </ul>
             </div>
             <div class="card-action" style="display: flex; gap: 10px; justify-content: flex-end; align-items: center;">
-              <div class="light"> 
-              <a 
-              class="waves-effect waves-light btn" 
-              href="/auth/forgot-password" 
-              style="background-color: var(--md-sys-color-primary); color: white;"> 
-              Change Password
-            </a>
-          </div>
+              <div class="light">
+                <a class="waves-effect waves-light btn" href="/auth/forgot-password"
+                  style="background-color: var(--md-sys-color-primary); color: white;">
+                  Change Password
+                </a>
+              </div>
               <form action="/auth/logout" method="POST" style="margin: 0;">
                 <button type="submit" class="waves-effect waves-light btn red">Logout</button>
               </form>
@@ -102,12 +116,11 @@
             <div class="card-content">
               <div class="history-header">
                 <span class="card-title">My History</span>
-                <div class="light"> 
-                <a class="waves-effect waves-light btn" 
-                href="/export-history"
-                style="background-color: var(--md-sys-color-primary); color: white;"> 
-                Export History</a>
-              </div>
+                <div class="light">
+                  <a class="waves-effect waves-light btn" href="/export-history"
+                    style="background-color: var(--md-sys-color-primary); color: white;">
+                    Export History</a>
+                </div>
               </div>
               <div class="history-panel">
                 <% if (userHistory && userHistory.length> 0) { %>
@@ -128,9 +141,31 @@
       </div>
     </main>
 
+    <!-- Edit Username Modal Structure -->
+    <div id="edit-username-modal" class="modal">
+      <div class="modal-content">
+        <h4>Edit Username</h4>
+        <form id="edit-username-form">
+          <div class="row">
+            <div class="input-field col s12">
+              <input id="new_username" type="text" class="validate">
+              <label for="new_username">New Username</label>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <a href="#" id="cancel-button" class="modal-close waves-effect waves-green btn-flat">Cancel</a>
+        <button type="submit" form="edit-username-form" class="waves-effect waves-light btn"
+          style="background-color: #446732; color: white;">Save</button>
+      </div>
+    </div>
+
     <!--JavaScript at end of body for optimized loading-->
     <script type="text/javascript" src="js/materialize.min.js"></script>
     <script src="js/script.js"></script>
+    <script src="js/my-account.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
 
 </body>
 

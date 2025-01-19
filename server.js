@@ -1,4 +1,29 @@
 const express = require("express");
+
+// Creating express app and configuring middleware below
+const app = express();
+
+const http = require('http');
+const { Server } = require("socket.io");
+
+const server = http.createServer(app);
+const io = new Server(server);
+
+global.io = io; // Make socket.io available globally
+
+io.on('connection', (socket) => {
+  console.log('A user connected');
+
+  // Emit an event to update the username to all connected clients
+  socket.on('usernameUpdated', (newUsername) => {
+    io.emit('usernameUpdated', newUsername); 
+  });
+
+  socket.on('disconnect', () => {
+    console.log('A user disconnected');
+  });
+});
+
 const path = require("path");
 
 // Authentication
@@ -20,9 +45,6 @@ const heatmapRoutes = require("./application/heatmap/routes/heatmapRoutes");
 
 // Setting up port
 const port = process.env.port || 3000;
-
-// Creating express app and configuring middleware
-const app = express();
 
 // Connect to MongoDB
 connectDB();
@@ -95,7 +117,7 @@ app.use(
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Start listening at port
-const server = app.listen(port, () => {
+server.listen(port, () => {
   // console.log("App listening to: " + port);
   console.log(`App listening at http://localhost:${port}`);
 });

@@ -1,4 +1,25 @@
 $(document).ready(async function () {
+
+  await $.get("/user", (data) => {
+    if (data.statusCode === 200) {
+      const user = data.user;
+      console.log("User:", user);
+  
+      // add div to #symptoms-list
+      $("#greeting-message").append(`
+        <span class="card-title">
+          <p>Hello,
+            <strong>${user.username}
+              <span id="user-id" style="display: none;">${user.id}</span>
+            </strong>
+          </p>
+        </span>
+        `);
+    } else {
+      console.error("Failed to get user data:", data);
+    }
+  });
+  
   await $.get('/medications', (data) => {
     if (data.statusCode === 200) {
       const medicationData = data.data;
@@ -75,4 +96,5 @@ $(document).ready(async function () {
       console.error('Failed to get symptoms data:', data);
     }
   });
+
 });

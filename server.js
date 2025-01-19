@@ -36,18 +36,25 @@ const MongoStore = require("connect-mongo");
 const mongoose = require("mongoose");
 const connectDB = require("./application/db"); // Import the database connection function. Doing it here ensures a single connection accross the entire app.
 
+// CORS
+const cors = require("cors");
+
 // Routes Import
 const authRoutes = require("./application/authentication/routes/authRoutes");
 const dashboardRoutes = require("./application/dashboard/routes/dashboardRoutes");
 const myAccountRoutes = require("./application/my_account/routes/myAccountRoutes");
 const diaryRoutes = require("./application/diary/routes/diaryRoutes");
 const heatmapRoutes = require("./application/heatmap/routes/heatmapRoutes");
+const forecastRoutes = require("./application/forecast/routes/forecastRoutes");
 
 // Setting up port
 const port = process.env.port || 3000;
 
 // Connect to MongoDB
 connectDB();
+
+// Enable CORS
+app.use(cors());
 
 // Set EJS as the view engine
 app.set("view engine", "ejs");
@@ -60,7 +67,7 @@ app.set("views", [
   path.join(__dirname, 'application', 'partials'), // Partials directory doesn't have any subdirectories
   path.join(__dirname, "application", "diary", "views"),
   path.join(__dirname, "application", "heatmap", "views"),
-  // ... other view directories for other features such as heat_map etc
+  path.join(__dirname, "application", "forecast", "views"),
 ]);
 
 // Body parsing middleware
@@ -105,7 +112,7 @@ app.use("/", ensureAuthenticated, dashboardRoutes);
 app.use("/my_account", ensureAuthenticated, myAccountRoutes);
 app.use("/diary", ensureAuthenticated,  diaryRoutes);
 app.use("/heatmap", ensureAuthenticated, heatmapRoutes);
-// ... define other routes here
+app.use("/forecast", ensureAuthenticated, forecastRoutes);
 
 // Apply authentication middleware to protect the root path
 app.use(

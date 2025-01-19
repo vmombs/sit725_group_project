@@ -30,12 +30,20 @@ $(document).ready(async function () {
 
         let image = '';
 
-        if (String(record.name).toLowerCase().includes('aspirin')) image = 'aspirin.jpg';
-        else if (String(record.name).toLowerCase().includes('ibuprofen')) image = 'ibuprofen.jpg';
-        else if (String(record.name).toLowerCase().includes('paracetamol')) image = 'paracetamol.jpg';
-        else if (String(record.name).toLowerCase().includes('allegra')) image = 'allegra.jpg';
-        else if (String(record.name).toLowerCase().includes('claritin')) image = 'claritin.jpg';
+        if (String(record.name).toLowerCase().includes('astepro')) image = 'astepro.jpg';
+        else if (String(record.name).toLowerCase().includes('alaway')) image = 'alaway.jpg';
         else if (String(record.name).toLowerCase().includes('zyrtec')) image = 'zyrtec.jpg';
+        else if (String(record.name).toLowerCase().includes('claritin')) image = 'claritin.jpg';
+        else if (String(record.name).toLowerCase().includes('allegra')) image = 'allegra.jpg';
+        else if (String(record.name).toLowerCase().includes('clarinex')) image = 'clarinex.jpg';
+        else if (String(record.name).toLowerCase().includes('nasonex')) image = 'nasonex.jpg';
+        else if (String(record.name).toLowerCase().includes('flonase')) image = 'flonase.jpg';
+        else if (String(record.name).toLowerCase().includes('zetonna')) image = 'zetonna.jpg';
+        else if (String(record.name).toLowerCase().includes('lotemax')) image = 'lotemax.jpg';
+        else if (String(record.name).toLowerCase().includes('omnipred')) image = 'omnipred.jpg';
+        else if (String(record.name).toLowerCase().includes('prelone')) image = 'prelone.jpg';
+        else if (String(record.name).toLowerCase().includes('medrol')) image = 'medrol.jpg';
+        else image = 'unknown.jpg';
 
         // add div to #symptoms-list
         $('#medications-list').append(`

@@ -1,19 +1,16 @@
-const express = require("express");
+const express = require('express');
+const router = express.Router();
 const axios = require("axios");
-const cors = require("cors");
-require("dotenv").config();
-
-const app = express();
-const PORT = 5000;
 
 // Load Google API Key from environment variables
 const GOOGLE_API_KEY = process.env.GOOGLE_API_KEY;
 
-// Enable CORS
-app.use(cors());
+router.get('/', (req, res) => {
+    res.render('forecast');
+});
 
 // Endpoint to fetch the 5-day pollen forecast
-app.get("/api/forecast", async (req, res) => {
+router.get("/api", async (req, res) => {
   const { latitude, longitude } = req.query;
   console.log('longitude = ',longitude)
   console.log('latitude = ',latitude)
@@ -34,7 +31,4 @@ app.get("/api/forecast", async (req, res) => {
   }
 });
 
-// Start the server
-app.listen(PORT, () => {
-  console.log(`Server running at http://localhost:${PORT}/api/forecast`);
-});
+module.exports = router;

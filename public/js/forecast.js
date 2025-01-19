@@ -17,20 +17,20 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    try {
-      const response = await fetch(`http://localhost:3000/forecast/api?latitude=${latitude}&longitude=${longitude}`);
-      if (!response.ok) {
-        throw new Error("Failed to fetch forecast data.");
+    $.ajax({
+      url: `/forecast/api?latitude=${latitude}&longitude=${longitude}`,
+      type: 'GET',
+      success: (data) => {
+        console.log("Frontend Received Data:", data);
+        displayForecast(data);
+        errorMessage.textContent = ""; // Clear error message
+      },
+      error: (xhr, status, error) => {
+        errorMessage.textContent = "Failed to fetch forecast data.";
+        console.error("Error fetching forecast data:", error);
       }
-
-      const data = await response.json();
-      console.log("Frontend Received Data:", data);
-      displayForecast(data);
-      errorMessage.textContent = ""; // Clear error message
-    } catch (err) {
-      errorMessage.textContent = "Failed to fetch forecast data.";
-      console.error(err.message);
-    }
+    });
+    
   }
 
   // Display forecast data

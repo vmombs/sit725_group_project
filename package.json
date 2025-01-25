@@ -11,7 +11,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "axios": "^1.7.9",
     "bcryptjs": "^2.4.3",
     "connect-mongo": "^5.1.0",
     "cors": "^2.8.5",
@@ -30,9 +29,10 @@
   },
   "devDependencies": {
     "@types/ejs": "^3.1.5",
+    "axios": "^1.7.9",
     "chai": "^5.1.2",
     "chai-http": "^5.1.1",
-    "mocha": "^11.0.1",
+    "mocha": "^11.1.0",
     "nodemon": "^3.1.9",
     "nyc": "^17.1.0",
     "sinon": "^19.0.2"

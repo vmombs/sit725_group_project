@@ -1,4 +1,6 @@
 // heatmapController.js
+
+const fetch = require('node-fetch');
 const heatmapView = require('../views/heatmapView');
 const L = require('leaflet');
 
@@ -33,33 +35,6 @@ function updatePollenLayer() {
   map.addLayer(tileLayer);
 }
 
-function searchLocation(req, res) {
-  const query = req.body.query;
-  const url = `https://nominatim.openstreetmap.org/search?format=json&q=${query}`;
-
-  fetch(url)
-    .then(response => response.json())
-    .then(data => {
-      if (data.length > 0) {
-        const lat = data[0].lat;
-        const lon = data[0].lon;
-        map.setView([lat, lon], 13);
-        res.json({ success: true });
-      } else {
-        res.json({ success: false, message: "Location not found!" });
-      }
-    })
-    .catch(error => {
-      console.error('Error:', error);
-      res.json({ success: false, message: "An error occurred while searching for the location." });
-    });
-}
-
-function updatePollenLayerController(req, res) {
-  pollen = req.body.pollen;
-  updatePollenLayer();
-  res.json({ success: true });
-}
 
 module.exports = {
   initMap,

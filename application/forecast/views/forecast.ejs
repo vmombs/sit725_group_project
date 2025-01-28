@@ -40,20 +40,61 @@
 
     <%- include('../partials/navbar') %>
 
-        <div class="container">
-            <h3 class="center-align">5-Day Pollen Forecast</h3>
-            <div class="input-field">
-                <input id="latitude" type="text" placeholder="Latitude">
-                <input id="longitude" type="text" placeholder="Longitude">
-            </div>
-            <button id="getForecast" class="btn waves-effect waves-light">Get Forecast</button>
-            <p id="errorMessage" class="red-text"></p>
-            <div id="forecastContainer" style="margin-top: 20px;"></div>
+    <div class="container">
+        <h3 class="center-align">5-Day Pollen Forecast</h3>
+        <div class="input-field">
+            <input id="latitude" type="text" placeholder="Latitude">
+            <input id="longitude" type="text" placeholder="Longitude">
+            <button id="detectLocation" class="btn waves-effect waves-light" style="margin-top: 10px;">
+                Use My Location
+            </button>
         </div>
+        <button id="getForecast" class="btn waves-effect waves-light">Get Forecast</button>
+        <p id="errorMessage" class="red-text"></p>
+        <div id="forecastContainer" style="margin-top: 20px;"></div>
+    </div>
 
-        <!--JavaScript at end of body for optimized loading-->
-        <script type="text/javascript" src="js/materialize.min.js"></script>
-        <script src="/js/forecast.js"></script>
+    <!--JavaScript at end of body for optimized loading-->
+    <script type="text/javascript" src="js/materialize.min.js"></script>
+    <script src="/js/forecast.js"></script>
+
+    <script>
+        // Geolocation API
+        document.getElementById("detectLocation").addEventListener("click", function () {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        // Populate latitude and longitude fields
+                        document.getElementById("latitude").value = position.coords.latitude.toFixed(6);
+                        document.getElementById("longitude").value = position.coords.longitude.toFixed(6);
+                        document.getElementById("errorMessage").textContent = ""; // Clear any error messages
+                    },
+                    (error) => {
+                        // Handle geolocation errors
+                        let errorMessage = "Error fetching location.";
+                        switch (error.code) {
+                            case error.PERMISSION_DENIED:
+                                errorMessage = "User denied the request for Geolocation.";
+                                break;
+                            case error.POSITION_UNAVAILABLE:
+                                errorMessage = "Location information is unavailable.";
+                                break;
+                            case error.TIMEOUT:
+                                errorMessage = "The request to get user location timed out.";
+                                break;
+                            case error.UNKNOWN_ERROR:
+                                errorMessage = "An unknown error occurred.";
+                                break;
+                        }
+                        document.getElementById("errorMessage").textContent = errorMessage;
+                    }
+                );
+            } else {
+                document.getElementById("errorMessage").textContent =
+                    "Geolocation is not supported by this browser.";
+            }
+        });
+    </script>
 
 </body>
 

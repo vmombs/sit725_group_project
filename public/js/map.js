@@ -1,29 +1,27 @@
 document.addEventListener('DOMContentLoaded', function () {
   // Define the geographical bounds for Melbourne
-  var southWest = L.latLng(-44.261, 112.596),
-    northEast = L.latLng(-10.460, 154.512);
-  var bounds = L.latLngBounds(southWest, northEast);
+  var bounds = [[-39.0, 141.0], [-34.5, 150.0]];
 
   // Initialize the map and set its view to Melbourne, and set maxBounds
   var map = L.map('map', {
     center: [-37.8136, 144.9631], // Center of Melbourne
-    zoom: 15,
+    zoom: 18,
     minZoom: 9,
-    maxZoom: 16, // Set maximum zoom level to 19
+    maxZoom: 13, 
     maxBounds: bounds, // Set the maximum bounds to Melbourne
-    maxBoundsViscosity: 1.0 // Optional: make the bounds more "sticky"
+    maxBoundsViscosity: 1.0 
   });
 
   // Add the base tile layer from OpenStreetMap
   L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    maxZoom: 19, // Set maximum zoom level to 19
+    maxZoom: 15, // Set maximum zoom level to 15
     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
   }).addTo(map);
 
   // Function to search for a location and move the map
   document.getElementById('search-button').onclick = function () {
     var query = document.getElementById('search-input').value;
-    var url = `https://nominatim.openstreetmap.org/search?format=json&q=${query}`;
+    var url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}`;
 
     fetch(url)
       .then(response => response.json())
@@ -42,23 +40,27 @@ document.addEventListener('DOMContentLoaded', function () {
       });
   };
 
-  // Initialize pollen layer and update based on selected button
-  var apiKey = ''; 
-  let pollen = "GRASS_UPI"; // Default pollen type
-  let pollenLayer; // Variable to hold the current pollen layer
+  // Fetch data from the Google Pollen API 
+  var apiKey = ''; // Temporaraily disabled 
+  var pollen = "GRASS_UPI"; // Default pollen type
+  var pollenLayer; 
 
   function updatePollenLayer() {
     if (pollenLayer) {
       map.removeLayer(pollenLayer); // Remove the previous pollen layer if it exists
     }
-    console.log(`Updating layer to: ${pollen}`);
+
+    // Create the tile layer with the appropriate pollen data
     const url = `https://pollen.googleapis.com/v1/mapTypes/${pollen}/heatmapTiles/{z}/{x}/{y}?key=${apiKey}`;
     console.log(`Fetching URL: ${url}`); 
+
+    // Create the tile layer for pollen data
     pollenLayer = L.tileLayer(url, {
       attribution: 'Google Pollen Heatmap',
       opacity: 0.5,
-      maxZoom: 16,  // Set maximum zoom level to 19
-      bounds: bounds // Restrict tiles to the defined bounds
+      maxZoom: 15,  // Set maximum zoom level to 15 for pollen tiles
+      noWrap: true,  // Ensure tiles are not wrapped around the world
+      tileSize: 256,  // Default tile size
     }).addTo(map);
   }
 

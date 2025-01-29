@@ -1,7 +1,7 @@
 const Medication = require('../../diary/models/Medication');
 const Symptom = require('../../diary/models/Symptom');
 const tf = require('@tensorflow/tfjs-node');
-const path = require('path');
+const fs = require('fs');
 
 // [VM] Added this function to return the user object so it can be used for displaying the username
 
@@ -67,14 +67,19 @@ async function loadModel() {
 }
 
 // TODO: real pollen input
-const pollenInput = [ 0.30122508,  1.4705943,   0.28796168, -1.4553582,   0.8609464,   1.45584234,
-  -1.46873242,  0.29142204,  1.47742723,  0.28215821, -1.46459973, -0.90322569,
-   0.87851482,  0.88808203,  1.43907028, -0.87274583, 0.87912694];
+const pollenInput = [1, 2, 4, 3, 3, 5, 4, 2, 1, 0, 1, 2, 4, 4, 0, 0, 0];
 
+const mean = JSON.parse(fs.readFileSync('model/scaler_mean.json', 'utf8'));
+const std = JSON.parse(fs.readFileSync('model/scaler_std.json', 'utf8'));
+
+function scaleData(input) {
+  return input.map((value, index) => (value - mean[index]) / std[index]);
+}
 
 function preprocessInput(input) {
   const pollenValues = Object.values(input);
-  return tf.tensor([pollenValues]);
+  const scaledValues = scaleData(pollenValues);
+  return tf.tensor([scaledValues]);
 }
 
 const getPredictions = async (req, res) => {

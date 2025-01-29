@@ -17,6 +17,7 @@ router.get('/symptoms', ensureAuthenticated, dashboardController.getSymptoms);
 
 router.get('/medications', ensureAuthenticated, dashboardController.getMedications);
 
+router.get('/predictions', ensureAuthenticated, dashboardController.getPredictions);
 
 router.get('/user', ensureAuthenticated, dashboardController.getUser);
 

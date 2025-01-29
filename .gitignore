@@ -137,3 +137,6 @@ db/
 
 # Output of nyc
 .nyc_output/
+
+# jupyter notebook checkpoints
+model/.ipynb_checkpoints/

@@ -23,10 +23,16 @@ module.exports = function (passport) {
         })
     );
 
+    // This function determines what user information gets stored in the session 
+    // after successful authentication. It essentially "serializes" the user object 
+    // into a simpler form, typically just the user ID.
     passport.serializeUser((user, done) => {
         done(null, user.id);
     });
 
+    // This function retrieves the full user object from the database based on 
+    // the information stored in the session by serializeUser. It "deserializes" 
+    // the session data back into a user object.
     passport.deserializeUser(async (id, done) => {
         try {
             const user = await User.findById(id);

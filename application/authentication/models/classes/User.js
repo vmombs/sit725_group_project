@@ -1,6 +1,8 @@
 const Medication = require('../../../diary/models/Medication');
 const Symptom = require('../../../diary/models/Symptom');
 const mongoose = require("mongoose");
+
+// bcryptjs is a JavaScript implementation of the bcrypt hashing algorithm.
 const bcrypt = require("bcryptjs");
 
 const userSchema = new mongoose.Schema({
@@ -36,6 +38,7 @@ userSchema.methods.updateUsername = async function (newUsername) {
   }
 };
 
+// Mongoose and bycrypt js secure password authentication
 userSchema.methods.comparePassword = async function (candidatePassword) {
   try {
     return await bcrypt.compare(candidatePassword, this.password);

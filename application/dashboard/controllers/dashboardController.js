@@ -83,14 +83,49 @@ function preprocessInput(input) {
 }
 
 const getPredictions = async (req, res) => {
+  try {
 
-  const model = await loadModel();
-  const processedInput = preprocessInput(pollenInput);
+    const model = await loadModel();
+    const processedInput = preprocessInput(pollenInput);
 
-  const prediction = model.predict(processedInput);
-  const predictionArray = await prediction.array();
+    const prediction = model.predict(processedInput);
+    const predictionArray = await prediction.array();
 
-  console.log("Predicted Symptoms & Medications:", predictionArray);
+    console.log("Raw Predicted Symptoms & Medications:", predictionArray);
+
+    predictionData = {
+      symptoms: {
+        congestion: Math.round(predictionArray[0][0]),
+        watery_eyes: Math.round(predictionArray[0][1]),
+        itchy_eyes: Math.round(predictionArray[0][2]),
+        sinus_pressure: Math.round(predictionArray[0][3]),
+        sneezing: Math.round(predictionArray[0][4]),
+      },
+      medications: {
+        azelastine: Math.round(predictionArray[0][5]),
+        ketotifen: Math.round(predictionArray[0][6]),
+        olopatadine: Math.round(predictionArray[0][7]),
+        cetirizine: Math.round(predictionArray[0][8]),
+        loratadine: Math.round(predictionArray[0][9]),
+        fexofenadine: Math.round(predictionArray[0][10]),
+        desloratadine: Math.round(predictionArray[0][11]),
+        mometasone: Math.round(predictionArray[0][12]),
+        fluticasone: Math.round(predictionArray[0][13]),
+        ciclesonide: Math.round(predictionArray[0][14]),
+        loteprednol: Math.round(predictionArray[0][15]),
+        prednisolone_1: Math.round(predictionArray[0][16]),
+        prednisolone_2: Math.round(predictionArray[0][17]),
+        methylprednisolone: Math.round(predictionArray[0][18]),
+      }
+    }
+
+    res.json({ statusCode: 200, data: predictionData });
+  }
+
+  catch (error) {
+    console.error('Failed to make a prediction:', error);
+    res.status(500).json({ statusCode: 500, message: 'Internal server error' });
+  }
 
 };
 

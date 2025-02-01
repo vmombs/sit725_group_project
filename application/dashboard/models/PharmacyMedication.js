@@ -21,6 +21,15 @@ const medicationSchema = new mongoose.Schema({
   // FUTURE TO DO: add other fields (e.g. description, manufacturer, available quantity etc.). 
 });
 
+medicationSchema.statics.getRecords = async function (email) {
+  try {
+    return await this.find({ email });
+  } catch (error) {
+    console.error('Error getting medication records:', error);
+    throw error;
+  }
+};
+
 const PharmacyMedication = mongoose.model('PharmacyMedication', medicationSchema, 'pharmacy_medications');
 
 module.exports = PharmacyMedication;

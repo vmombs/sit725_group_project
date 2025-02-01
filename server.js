@@ -2,27 +2,11 @@ const express = require("express");
 
 // Creating express app and configuring middleware below
 const app = express();
-
 const http = require('http');
-const { Server } = require("socket.io");
-
 const server = http.createServer(app);
-const io = new Server(server);
+const socketManager = require('./socketManager');
 
-global.io = io; // Make socket.io available globally
-
-io.on('connection', (socket) => {
-  console.log('A user connected');
-
-  // Emit an event to update the username to all connected clients
-  socket.on('usernameUpdated', (newUsername) => {
-    io.emit('usernameUpdated', newUsername); 
-  });
-
-  socket.on('disconnect', () => {
-    console.log('A user disconnected');
-  });
-});
+socketManager.initialize(server); // Initialize io
 
 const path = require("path");
 

@@ -129,13 +129,17 @@
                 <ul>
                   <% userHistory.forEach(item=> { %>
                     <li>
-                      <%= item %>
+                      <% if (item.startsWith('Date:')) { %>
+                        <strong><%= item %></strong>
+                      <% } else { %>
+                        <span>- <%= item %></span>
+                      <% } %>
                     </li>
                   <% }); %>
                 </ul>
                 <% } else { %>
                   <p>No history available.</p>
-                  <% } %>
+                <% } %>
               </div>
             </div>
           </div>

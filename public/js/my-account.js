@@ -67,7 +67,7 @@ document.addEventListener("DOMContentLoaded", function () {
             <td>
               <button class="waves-effect waves-light btn btn-small update-price-btn" 
                       data-medication-name="${medication.medicationName}"
-                      style="background-color: var(--md-sys-color-primary); color: white;">
+                      style="background-color: #446732; color: white;">
                 Update Price
               </button>
             </td>

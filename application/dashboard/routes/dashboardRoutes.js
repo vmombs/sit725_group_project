@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const dashboardController = require('../controllers/dashboardController');
+const medicationController = require('../controllers/medicationController');
 
 const ensureAuthenticated = (req, res, next) => {
   if (req.isAuthenticated()) {
@@ -20,5 +21,10 @@ router.get('/medications', ensureAuthenticated, dashboardController.getMedicatio
 router.get('/predictions', ensureAuthenticated, dashboardController.getPredictions);
 
 router.get('/user', ensureAuthenticated, dashboardController.getUser);
+
+// Pharmacy Medication Routes (new)
+router.get('/medications/all', ensureAuthenticated, medicationController.getAllMedications); // Get all medications
+router.get('/medications/:id', ensureAuthenticated, medicationController.getMedicationById); // Get medication by ID
+router.post('/medications/updatePrice', ensureAuthenticated, medicationController.updateMedicationPrice); // Update medication price
 
 module.exports = router;

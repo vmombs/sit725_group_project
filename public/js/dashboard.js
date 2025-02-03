@@ -1,20 +1,18 @@
 $(document).ready(async function () {
-
-  // NEW: These variables are new (check explanations next to each)
   const medicationData = {}; // variable to store data from the pharmacy_medications collection in mongodb
   const socket = io("http://localhost:3000"); // connection to the web socket instance
 
-  // NEW: Web Socket connection. Setup and initialisation is in the socketManager.js file
+  // Web Socket connection. Setup and initialisation is in the socketManager.js file
   socket.on("connect", () => {
     console.log("Client connected to the server");
   });
 
-  // NEW: log message when there is a connection error
+  // Log message when there is a connection error
   socket.on("connect_error", (err) => {
     console.error("WebSocket Connection Error:", err);
   });
 
-  // NEW: Web Socket listner for price updates
+  // Web Socket listener for price updates
   socket.on("priceUpdate", (data) => {
     console.log("Received price update:", data);
     const { medicationName, price } = data;
@@ -33,7 +31,7 @@ $(document).ready(async function () {
     updateTotalPrice(); // This function is called to update the total price when one of the prices changes
   });
 
-  // NEW: function to calculate the total price. The code should be self-explanatory
+  // Function to calculate the total price.
   function updateTotalPrice() {
     let totalPrice = 0;
     const medicationElements = document.querySelectorAll(".medication-item");
@@ -52,7 +50,6 @@ $(document).ready(async function () {
     }
   }
 
-  // UNCHANGED: Function to get the user from the DB remains unchanged
   await $.get("/user", (data) => {
     if (data.statusCode === 200) {
       const user = data.user;
@@ -72,10 +69,9 @@ $(document).ready(async function () {
     }
   });
 
-  // NEW: Function to get all the data from the pharmacy_medications collection in mongodb
+  // Function to get all the data from the pharmacy_medications collection in mongodb
   // This data is stored in the medicationData variable from line 4 above
   // Note that in the db, we have a medicationName field which is being used as the key here 
-  // This makes it work seamlessly with other parts of the code that have not been changed
   await $.get("/medications/all", (data) => {
     if (data) {
       data.forEach((medication) => {
@@ -108,22 +104,13 @@ $(document).ready(async function () {
       if (data.statusCode === 200) {
         const medicationPredictionData = data.data.medications;
 
-        // UNMODIFIED: This part is still getting the ${value} from the preditions data and the ${key} remains the same
         Object.entries(medicationPredictionData).forEach(([key, value]) => {
-
-          // MODIFIED: We're now getting all the medications data from the db and it's stored in the pharmacy_medications collection
-          // here we're usisng they ${key} from the medicationPredictionData to look up the relevant data in the medicationData array
           const medication = medicationData[key] || {
             displayName: "Unknown",
             price: "Unknown",
             image: "unknown.jpg",
           };
 
-          // MODIFIED: This part has been modified as follows
-          // 1. Added a field to display the ${price}
-          // 2. Added identifiers to two elements (medication-item, medication-price). We need these to be able to query and update each item
-          // 3. changed the source of the image name so that the image name is taken from the db data rather than in the local variable
-          // Most other code is unchanged
           $("#medications-list").append(`
           <div class="col s4 medication-item">
             <div class="card">
@@ -134,12 +121,9 @@ $(document).ready(async function () {
             </div>
           </div>
         `);
-
-          // NEW: added function to update price
           updateTotalPrice(); // Here, this function is called to update the total price when the page initialy loads
         });
 
-        // UNCHANGED: This part of the code all the way to the bottom remains unchanged
         const symptomPredictionData = data.data.symptoms;
         Object.entries(symptomPredictionData).forEach(([key, value]) => {
           const symptomNames = {

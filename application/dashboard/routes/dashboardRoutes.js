@@ -29,7 +29,4 @@ router.get('/medications/all', ensureAuthenticated, medicationController.getAllM
 router.get('/medications/:id', ensureAuthenticated, medicationController.getMedicationById); // Get medication by ID
 router.post('/medications/updatePrice', ensureAuthenticated, medicationController.updateMedicationPrice); // Update medication price
 
-
-
-
 module.exports = router;

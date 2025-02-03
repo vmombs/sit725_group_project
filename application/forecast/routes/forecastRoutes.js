@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const forecastController = require('../controllers/forecastController');
+const axios = require('axios');
 
 // Route to render the forecast page
 router.get('/', forecastController.renderForecastPage);
@@ -10,7 +11,7 @@ router.get('/api', async (req, res) => {
     const { latitude, longitude } = req.query;
 
     try {
-        const forecastData = await forecastController.getPollenForecast(latitude, longitude);
+        const forecastData = await forecastController.getPollenForecast(latitude, longitude, axios);
         res.json(forecastData); // Send the API response to the client
     } catch (error) {
         console.error("Error fetching pollen data:", error.message);

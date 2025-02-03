@@ -1,5 +1,3 @@
-const axios = require('axios');
-
 // Load Google API Key from environment variables
 const GOOGLE_API_KEY = process.env.GOOGLE_API_KEY;
 
@@ -9,7 +7,7 @@ exports.renderForecastPage = (req, res) => {
 };
 
 // Function to fetch the pollen forecast data
-exports.getPollenForecast = async (latitude, longitude) => {
+exports.getPollenForecast = async (latitude, longitude, axios) => {
     // Validate input
     if (!((latitude >= -90 && latitude <= 90) && (longitude >= -180 && longitude <= 180))) {
         throw new Error("Enter valid Latitude and Longitude");

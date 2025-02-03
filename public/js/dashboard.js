@@ -105,13 +105,14 @@ $(document).ready(async function () {
         const medicationPredictionData = data.data.medications;
 
         Object.entries(medicationPredictionData).forEach(([key, value]) => {
-          const medication = medicationData[key] || {
-            displayName: "Unknown",
-            price: "Unknown",
-            image: "unknown.jpg",
-          };
+          if (value > 0) {
+            const medication = medicationData[key] || {
+              displayName: "Unknown",
+              price: "Unknown",
+              image: "unknown.jpg",
+            };
 
-          $("#medications-list").append(`
+            $("#medications-list").append(`
           <div class="col s4 medication-item">
             <div class="card">
               <div class="card-image">
@@ -121,34 +122,38 @@ $(document).ready(async function () {
             </div>
           </div>
         `);
-          updateTotalPrice(); // Here, this function is called to update the total price when the page initialy loads
+          }
+          updateTotalPrice(); // Here, this function is called to update the total price when the page initially loads
         });
 
         const symptomPredictionData = data.data.symptoms;
         Object.entries(symptomPredictionData).forEach(([key, value]) => {
-          const symptomNames = {
-            congestion: "Congestion",
-            watery_eyes: "Watery Eyes",
-            itchy_eyes: "Itchy Eyes",
-            sinus_pressure: "Sinus Pressure",
-            sneezing: "Sneezing",
-          };
 
-          let image = `${key.replace(/_/g, "-")}.jpg`;
-          let severity =
-            ["Unknown", "Mild", "Moderate", "Severe"][value] || "Unknown";
+          if (value > 0) {
+            const symptomNames = {
+              congestion: "Congestion",
+              watery_eyes: "Watery Eyes",
+              itchy_eyes: "Itchy Eyes",
+              sinus_pressure: "Sinus Pressure",
+              sneezing: "Sneezing",
+            };
 
-          $("#symptoms-list").append(`
+            let image = `${key.replace(/_/g, "-")}.jpg`;
+            let severity =
+              ["Unknown", "Mild", "Moderate", "Severe"][value] || "Extreme";
+
+            $("#symptoms-list").append(`
           <div class="col s4">
             <div class="card">
               <div class="card-image">
                 <img src="assets/images/symptoms/${image}" alt="Card Background">
                 <span class="card-title">${severity} ${symptomNames[key] || key
-            }</span>
+              }</span>
               </div>
             </div>
           </div>
         `);
+          }
         });
       } else {
         console.error("Failed to get predictions:", data);

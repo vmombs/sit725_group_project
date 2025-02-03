@@ -18,13 +18,18 @@ router.get('/symptoms', ensureAuthenticated, dashboardController.getSymptoms);
 
 router.get('/medications', ensureAuthenticated, dashboardController.getMedications);
 
-router.get('/predictions', ensureAuthenticated, dashboardController.getPredictions);
-
 router.get('/user', ensureAuthenticated, dashboardController.getUser);
+
+router.post('/predictions', ensureAuthenticated, (req, res) => {
+  dashboardController.getPredictions(req, res)
+});
 
 // Pharmacy Medication Routes (new)
 router.get('/medications/all', ensureAuthenticated, medicationController.getAllMedications); // Get all medications
 router.get('/medications/:id', ensureAuthenticated, medicationController.getMedicationById); // Get medication by ID
 router.post('/medications/updatePrice', ensureAuthenticated, medicationController.updateMedicationPrice); // Update medication price
+
+
+
 
 module.exports = router;

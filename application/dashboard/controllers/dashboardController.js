@@ -2,6 +2,10 @@ const Medication = require('../../diary/models/Medication');
 const Symptom = require('../../diary/models/Symptom');
 const tf = require('@tensorflow/tfjs-node');
 const fs = require('fs');
+const axios = require('axios');
+
+// Load Google API Key from environment variables
+const GOOGLE_API_KEY = process.env.GOOGLE_API_KEY;
 
 // [VM] Added this function to return the user object so it can be used for displaying the username
 
@@ -66,9 +70,6 @@ async function loadModel() {
   return model;
 }
 
-// TODO: real pollen input
-const pollenInput = [1, 2, 4, 3, 3, 5, 4, 2, 1, 0, 1, 2, 4, 4, 0, 0, 0];
-
 const mean = JSON.parse(fs.readFileSync('model/scaler_mean.json', 'utf8'));
 const std = JSON.parse(fs.readFileSync('model/scaler_std.json', 'utf8'));
 
@@ -82,11 +83,36 @@ function preprocessInput(input) {
   return tf.tensor([scaledValues]);
 }
 
+function extractPollenLevels(apiResponse) {
+  const plantOrder = [
+    "ALDER", "ASH", "BIRCH", "COTTONWOOD", "ELM", "MAPLE", "OLIVE",
+    "JUNIPER", "OAK", "PINE", "CYPRESS_PINE", "HAZEL", "GRAMINALES",
+    "JAPANESE_CEDAR", "JAPANESE_CYPRESS", "RAGWEED", "MUGWORT"
+  ];
+
+  const dailyInfo = apiResponse.dailyInfo[0];
+  const plantIndexMap = {};
+
+  if (dailyInfo && dailyInfo.plantInfo) {
+    dailyInfo.plantInfo.forEach(plant => {
+      if (plant.indexInfo) {
+        plantIndexMap[plant.code] = plant.indexInfo.value;
+      }
+    });
+  }
+
+  return plantOrder.map(plantCode => plantIndexMap[plantCode] || 0);
+}
+
 const getPredictions = async (req, res) => {
+  const { latitude, longitude } = req.body;
   try {
+    const url = `https://pollen.googleapis.com/v1/forecast:lookup?key=${GOOGLE_API_KEY}&location.latitude=${latitude}&location.longitude=${longitude}&days=1`;
+    const response = await axios.get(url);
+    const pollenLevels = extractPollenLevels(response.data);
 
     const model = await loadModel();
-    const processedInput = preprocessInput(pollenInput);
+    const processedInput = preprocessInput(pollenLevels);
 
     const prediction = model.predict(processedInput);
     const predictionArray = await prediction.array();

@@ -1,6 +1,6 @@
+const tf = require('@tensorflow/tfjs-node');
 const Medication = require('../../diary/models/Medication');
 const Symptom = require('../../diary/models/Symptom');
-const tf = require('@tensorflow/tfjs-node');
 const fs = require('fs');
 const axios = require('axios');
 

@@ -1,4 +1,12 @@
 services:
+  sneezl:
+    image: sneezl:latest
+    container_name: sneezl
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mongo
+    restart: unless-stopped
   mongo:
     image: mongo:latest
     container_name: sneezlDB
